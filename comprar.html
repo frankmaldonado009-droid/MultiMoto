@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compra de Moto</title>
+  <link rel="stylesheet" href="css/styles.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+      <video autoplay muted loop id="bg-video">
+    <source src="img/video.mp4" type="video/mp4">
+  </video>
+
+  <div class="overlay"></div>
+
+  <header>
+  
+  </header>
+
+ <main class="form-container">
+    <div class="preview-moto">
+        <h2 id="titulo-moto"></h2>
+        <img id="imagen-moto" src="" alt="Moto seleccionada">
+    </div>
+
+    <form id="form-compra">
+      <label for="nombre">Nombre y Apellido:</label>
+      <input type="text" id="nombre" name="nombre" required>
+
+      <label for="email">Correo Electrónico:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="moto">Moto Seleccionada:</label>
+      <input type="text" id="moto" name="moto" readonly>
+
+      <label for="color">Color:</label>
+      <select id="color" name="color" required>
+        <option value="Negro">Negro</option>
+        <option value="Azul">Azul</option>
+        <option value="Rojo">Rojo</option>
+        <option value="Blanco">Blanco</option>
+      </select>
+
+      <label for="pago">Método de Pago:</label>
+      <select id="pago" name="pago" required>
+        <option value="Tarjeta">Tarjeta</option>
+        <option value="Transferencia">Transferencia</option>
+        <option value="Efectivo">Efectivo</option>
+      </select>
+
+      <label for="direccion">Dirección de Entrega:</label>
+      <textarea id="direccion" name="direccion" required></textarea>
+
+      <label for="observaciones">Observaciones:</label>
+      <textarea id="observaciones" name="observaciones"></textarea>
+
+      <button type="submit" class="btn-comprar">Finalizar Compra</button>
+     <button type="button" class="btn-cancelar" id="btn-cancelar">Cancelar</button>
+    </form>
+</main>
+
+
+<script>
+ 
+  const urlParams = new URLSearchParams(window.location.search);
+  const motoSeleccionada = urlParams.get("moto");
+  const imgMoto = urlParams.get("img");
+
+
+  document.getElementById("moto").value = motoSeleccionada;
+  document.getElementById("titulo-moto").textContent = motoSeleccionada;
+  document.getElementById("imagen-moto").src = imgMoto;
+
+  document.getElementById("form-compra").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    Swal.fire({
+      title: '¡Compra Exitosa!',
+      html: `
+        <p>Has comprado la <b>${motoSeleccionada}</b></p>
+        <img src="${imgMoto}" alt="Moto" style="width:200px; margin-top:10px;">
+      `,
+      icon: 'success',
+      confirmButtonText: 'Aceptar'
+    }).then(() => {
+      window.location.href = "index.html"; 
+    });
+  });
+    document.getElementById("btn-cancelar").addEventListener("click", function(){
+    window.location.href = "index.html";});
+</script>
+</body>
+</html>
